@@ -1,0 +1,162 @@
+ <!DOCTYPE html>
+ <html>
+     <head>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+         <meta name="format-detection" content="telephone=no" />
+         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+         <link rel="stylesheet" type="text/css" href="../../css/cisc.css" />
+        <title>LF10 - Lateral Forces NBC 2010 (Seismic)</title>
+     </head>
+     <body>
+         <div class="stage">
+             <div class="header">
+                 <div class="row-fluid">
+                  <div class="span5"><img src="../../img/logo.svg" class="headerlogo"></div>
+                   <div class="span7">
+                    <h2>LF10 - Lateral Forces NBC 2010 (Seismic)</h2>
+                    
+                     <h3>Equivalent Static Force Procedure</h3>
+                   </div>
+                 </div>
+             </div>
+                         
+             
+            <div class="content">
+            	<div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">Building Height H<sub>n</sub> (m)</div>
+                                    <div class="span6 labelleftinput">
+                                        <input type="number" data-bind="value: buildHeight, enable: isUserSpecifiedBuildHeight" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span6 labelboth">
+                                <input type="checkbox" data-bind="checked: isUserSpecifiedBuildHeight" />Check to input a different value.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: isUserSpecifiedBuildHeight">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                  <a id="a-recauculate" class="button blue span4 spanner">Recalculate T</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Fundamental Period (X Direction)</h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">T<sub>formula</sub> (s)</div>
+                                    <div class="span6 labelleftinput">
+                                        <input type="number" data-bind="value: roundValue(xTFormula)" disabled="disabled"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12 labelboth">
+                                <input type="checkbox" data-bind="checked: isUserSpecifiedXTaMechanice" />Check to input value for T<sub>mechanics</sub> (s).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: isUserSpecifiedXTaMechanice">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">T<sub>mechanics</sub> (s)</div>
+                                    <div class="span6 labelleftinput">
+                                        <input type="number" data-bind="value: computedXTaMechanice, enable: isUserSpecifiedXTaMechanice" />
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Fundamental Period (Y Direction)</h4>
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">T<sub>formula</sub> (s)</div>
+                                    <div class="span6 labelleftinput">
+                                        <input type="number" data-bind="value: roundValue(yTFormula)" disabled="disabled" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12 labelboth">
+                                <input type="checkbox" data-bind="checked: isUserSpecifiedYTaMechanice" />Check to input value for T<sub>mechanics</sub> (s).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: isUserSpecifiedYTaMechanice">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">T<sub>mechanics</sub> (s)</div>
+                                    <div class="span6 labelleftinput">
+                                        <input type="number" data-bind="value: computedYTaMechanice, enable: isUserSpecifiedYTaMechanice" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             <div class="push"></div>
+         </div>
+
+         <div class="footer">
+             <div class="stage">
+                 <div class="row-fluid">
+                    <a id="a-next" class="button blue span4 spanner">View Outputs</a>
+                    <a id="a-back" class="button grey span3">Back</a>
+                    <a href="../info.html" class="button grey span2">?</a>
+                    <a href="../landing.html" class="button grey span3">Home</a>
+                 </div>
+             </div>
+         </div>
+        
+        <!-- <script type="text/javascript" src="../../../cordova.js"></script>-->
+        <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="../../js/knockout-3.1.0.js"></script>
+        <script type="text/javascript" src="../../js/knockout.mapping-latest.js"></script>
+        <script type="text/javascript" src="../../js/knockout.validation.min.js"></script>
+        <script type="text/javascript" src="../../js/fileio.js"></script>
+        <script type="text/javascript" src="../../js/nav.js"></script>
+        <script type="text/javascript" src="../../js/seismicFormulas.js"></script>
+        <script type="text/javascript" src="js/screen2ViewModel.js"></script>
+        <script type="text/javascript" src="js/screen2.js"></script>
+
+     </body>
+ </html>
