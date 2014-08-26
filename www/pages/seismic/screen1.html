@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link rel="stylesheet" type="text/css" href="../../css/cisc.css" />
+<title>LF10 - Lateral Forces NBC 2010 (Seismic)</title>
+</head>
+
+<body>
+	<div class="stage">
+		
+		<div class="header">
+		
+			<div class="row-fluid">
+				<div class="span5"><img src="../../img/logo.svg" class="headerlogo"></div>
+				<div class="span7">
+					<h2>LF10 - Lateral Forces NBC 2010 (Seismic)</h2>
+					<h3>Equivalent Static Force Procedure</h3>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="content" style="position:relative">
+			
+			<h4>Project Information</h4>
+			
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Project Name</div>
+						<div class="span6 labelleftinput">
+							<input type="text" data-bind="value: projectName" />
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Prepared By</div>
+						<div class="span6 labelleftinput">
+							<input type="text" data-bind="value: user" />
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<h4>Storey Height And Weight</h4>
+
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Number of Levels (&le; 100)</div>
+						<div class="span6 labelleftinput">
+							<input type="number" data-bind="value: currentlySelectedLevel" />
+						</div>
+					</div>
+					<div class="row-fluid">
+						<div class="offset7">
+							<img height="200" width="200" src="../../img/seismic-levels.png" />
+							<br /><br />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row-fluid">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Level</th>
+							<th>h<sub>s</sub>(m)</th>
+							<th>W(kN)</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: reverseLevels()" >
+						<tr>
+                            <!-- ko if: $index() == 0 -->
+                            <td>Roof</td>
+                            <!-- /ko -->
+                            <!-- ko ifnot: $index() == 0 -->
+                            <td data-bind="text: level"></td>
+                            <!-- /ko -->
+							<td class="white"><input type="number" data-bind="value: hsM" class="inputremove"></td>
+							<td class="white"><input type="number" data-bind="value: wkN" class="inputremove"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>      
+			
+			<h4>Site and Class (X &amp; Y Directions)</h4>
+			
+			<div class="row-fluid">
+		<div class="span12" data-bind="visible: !isUserSpecified()">
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Province</div>
+						<div class="span6 labelright white">
+							<select data-bind="options: provinces, optionsText: 'value', optionsValue: this, value: province, disable: isUserSpecified"></select>
+						</div>
+					</div>
+				</div>
+			
+				<div class="span6">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Location</div>
+						<div class="span6 labelright white">
+							<select data-bind="options: locations, optionsText: 'City', optionsValue: this, value: location, disable: isUserSpecified"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="row-fluid">
+				<table class="table table-bordered">
+					<thead>
+						<th>S<sub>a</sub>(0.2)</th>
+						<th>S<sub>a</sub>(0.5)</th>
+						<th>S<sub>a</sub>(1.0)</th>
+						<th>S<sub>a</sub>(2.0)</th>
+					</thead>
+					<tbody>
+						<tr class="white">
+							<td>
+								<input type="number" data-bind="value: location().Sa02, enable: isUserSpecified" class="inputremove">
+							</td>
+							<td>
+								<input type="number" data-bind="value: location().Sa05, enable: isUserSpecified" class="inputremove">
+							</td>
+							<td>
+								<input type="number" data-bind="value: location().Sa10, enable: isUserSpecified" class="inputremove">
+							</td>
+							<td>
+								<input type="number" data-bind="value: location().Sa20, enable: isUserSpecified" class="inputremove">
+							</td>
+						</tr>
+					</tbody>
+				<table>
+		</div>
+
+		<div class="row-fluid">
+            <div class="span12 labelboth">
+            	<input type="checkbox" data-bind="checked: isUserSpecified" />Check to enter user-specified spectral accelerations.  Uncheck to use NBC 2010 Climatic Wind Data.
+          </div>
+        </div>
+
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="row-fluid">
+							<div class="span6 labelleft">Importance Category</div>
+							<div class="span6 labelright white">
+								<select data-bind="options: importanceCategories(), optionsText: 'Importance Category', optionsValue: this, value: importanceCategory"></select>
+							</div>
+						</div>
+					</div>
+				
+					<div class="span6">
+						<div class="row-fluid">
+							<div class="span6 labelleft">Site Class</div>
+							<div class="span6 labelright white">
+								<select data-bind="options: siteProperties(), optionsText: 'value', optionsValue: this, value: siteClass"></select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		  <div class="row-fluid" data-bind="visible: isOtherSiteClass">
+		    <div class="span6">
+		      <div class="row-fluid">
+		        <div class="span6 labelleft">F<sub>a</sub></div>
+		        <div class="span6 labelleftinput">
+		          <input type="number" data-bind="value: fa" />
+		        </div>
+		      </div>
+		    </div>
+		    <div class="span6">
+		      <div class="row-fluid">
+		        <div class="span6 labelleft">F<sub>v</sub></div>
+		        <div class="span6 labelleftinput">
+		          <input type="number" data-bind="value: fv" />
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+
+			<h4>SRFS and Period (X Direction)</h4>
+
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Type of SFRS</div>
+						<div class="span6 labelright white">
+							<select data-bind="options: typesOfSFRS(), optionsText: 'StructuralSystem', optionsValue: this, value: xSelectedSFRS"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <div class="row-fluid">
+                <div class="span12">
+                  <div class="row-fluid">
+                    <div class="span6">
+                      <div class="span6 labelleft">R<sub>d</sub></div>
+                      <div class="span6 labelright" data-bind="text: xSelectedSFRS().Rd">
+                      </div>
+                    </div>
+
+                    <div class="span6">
+                      <div class="span6 labelleft">R<sub>o</sub></div>
+                      <div class="span6 labelright" data-bind="text: xSelectedSFRS().Ro">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+              
+
+			    <h4>SRFS and Period (Y Direction)</h4>
+
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="row-fluid">
+						<div class="span6 labelleft">Type of SFRS</div>
+						<div class="span6 labelright white">
+							<select data-bind="options: typesOfSFRS(), optionsText: 'StructuralSystem', optionsValue: this, value: ySelectedSFRS"></select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+                <div class="row-fluid">
+                    <div class="span12">
+                      <div class="row-fluid">
+                        <div class="span6">
+                          <div class="span6 labelleft">R<sub>d</sub></div>
+                          <div class="span6 labelright" data-bind="text: ySelectedSFRS().Rd">
+                          </div>
+                        </div>
+
+                        <div class="span6">
+                          <div class="span6 labelleft">R<sub>o</sub></div>
+                          <div class="span6 labelright" data-bind="text: ySelectedSFRS().Ro">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              
+			          
+			          
+			<div class="push"></div>
+	</div>
+</div>
+
+
+<div class="footer" style="position:absolute; padding:0;">
+	<div class="stage" style="padding: 10px 0;">
+		<div class="row-fluid">
+			<a id="a-next" class="button blue span6 spanner">Continue</a>
+			<a href="../info.html" class="button grey span2">?</a>
+			<a href="../landing.html" class="button grey span4">Home</a>
+		</div>
+	</div>
+</div>
+
+	<!--<script type="text/javascript" src="../../../cordova.js"></script>-->
+	<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../js/knockout-3.1.0.js"></script>
+	<script type="text/javascript" src="../../js/knockout.validation.min.js"></script>
+	<script type="text/javascript" src="../../js/fileio.js"></script>
+	<script type="text/javascript" src="../../js/nav.js"></script>
+	<script type="text/javascript" src="../../js/seismicFormulas.js"></script>
+	<script type="text/javascript" src="js/screen1ViewModel.js"></script>
+	<script type="text/javascript" src="js/screen1.js"></script>
+</body>
+</html>

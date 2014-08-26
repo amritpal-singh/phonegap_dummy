@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+        <link rel="stylesheet" type="text/css" href="../../css/cisc.css" />
+        <link rel="stylesheet" type="text/css" href="../../js/jqplot/jquery.jqplot.min.css" />
+
+        <title>
+            LF10 - Lateral Forces NBC 2010 (Seismic)
+        </title>
+    </head>
+    <body>
+        <div class="stage">
+            <div class="header">
+                <div class="row-fluid">
+                    <div class="span5">
+                        <img src="../../img/logo.svg" class="headerlogo" />
+                    </div>
+                    <div class="span7">
+                        <h2>
+                            LF10 - Lateral Forces NBC 2010 (Seismic)
+                        </h2>
+                        <h3>
+                            Equivalent Static Force Procedure
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <h4>
+                    SRFS and Period (X and Y Directions)
+                </h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Total Weight, W (kN)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(totalWeight)"></div>
+                        </div>
+                    </div>
+                </div>
+             
+                <h4>
+                    Force Distribution (X Direction)
+                </h4>
+
+                <div class="row-fluid" data-bind="visible: xPermittedByNBC">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Base Shear, V (kN)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(xBaseShear)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: xPermittedByNBC">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Force at the top, F<sub>t</sub> (kN)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(xTopForce)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="row-fluid">
+                     <div class="span12">
+                       <div class="row-fluid">
+                         <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">T<sub>a</sub></div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(xTa, 3)"></div>
+                          
+                                </div>
+                         </div>
+                         <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">S(T<sub>a</sub>)</div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(xSTa, 3)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">S(T<sub>a</sub>)M<sub>v</sub></div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(xSTaMv, 3)"></div>
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">J for T<sub>a</sub></div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(xJForTa, 2)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <p>According to the Location, Importance category, Site Class, Height of the building and NBC 2012 Articles 4.1.8.9 and 4.1.8.10, the selected SFRA is:</p>
+                                <div class="span11 labelboth permitted" data-bind="visible: xPermittedByNBC">
+                                    <span>Permitted by NBC</span>
+                                </div>
+                                <div class="span11 labelboth notpermitted" data-bind="visible: !xPermittedByNBC()">
+                                    <span>Not Permitted by NBC</span>
+                                </div>
+                                <div class="span12" data-bind="visible: showSAMessage">
+                                    <p>
+                                        When S(0.2) is less than or equal to 
+0.12, earthquake loads and effects need not be considered.
+                                    </p>
+                                </div>
+                           </div>
+                           <div class="span6">
+                                <img height="200" width="200" src="../../img/seismic-levels-output.png" />
+                                <br /><br />
+                           </div>
+                       </div>
+                     </div>
+                 </div>
+                
+
+                <div class="row-fluid" data-bind="visible: xPermittedByNBC">
+                    <table class="table table-bordered white">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Level
+                                </th>
+                                <th>
+                                    h (m)
+                                </th>
+                                <th>
+                                    W (kN)
+                                </th>
+                                <th>
+                                    F(kN)
+                                </th>
+                                <th>
+                                    V (kN)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: xFinalList().reverse()">
+                            <tr>
+                                <td data-bind="text: level"></td>
+                                <td data-bind="text: roundValue(hm)"></td>
+                                <td data-bind="text: roundValue(wkn)"></td>
+                                <td data-bind="text: roundValue(fkn)"></td>
+                                <td data-bind="text: roundValue(vkn)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <div class="row-fluid" data-bind="visible: xPermittedByNBC">
+                    <table class="table table-bordered white">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Level
+                                </th>
+                                <th>
+                                    M(kN)
+                                </th>
+                                <th>
+                                    J () <span data-bind="visible: showXOtherSFRSMessage">*</span>
+                                </th>
+                                <th>
+                                    M<sub>reduced</sub>(kN-m) <span data-bind="visible: showXOtherSFRSMessage">*</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: xFinalList()">
+                            <tr>
+                                <td data-bind="text: level"></td>
+                                <td data-bind="text: roundValue(mknm)"></td>
+                                <td data-bind="text: roundValue(j, 2)"></td>
+                                <td data-bind="text: roundValue(mknmRed)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p data-bind="visible: showXOtherSFRSMessage">
+                        * Reduction coefficient for base overturning moment is not applied.
+                    </p>
+                </div>
+                
+                <div id="xgraph"></div>
+                
+                <h4>
+                    Force Multiplier For Deflections Calculation (X Direction)
+                </h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Period Used - T<sub>a</sub>(deflections)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(xPeriodUsedTaDeflection, 3)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: xPermittedByNBC">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Multiplier for deflections - V<sub>deflections</sub> / V<sub>strength</sub>
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(xMultiForDeflection)"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>
+                    Force Distribution (Y Direction)
+                </h4>
+                <div class="row-fluid" data-bind="visible: yPermittedByNBC">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Base Shear, V (kN)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(yBaseShear)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: yPermittedByNBC">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Force at the top, F<sub>t</sub> (kN)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(yTopForce)"></div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="row-fluid">
+                     <div class="span12">
+                       <div class="row-fluid">
+                         <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">T<sub>a</sub></div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(yTa, 3)"></div>
+                           </div>
+                         </div>
+                         <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">S(T<sub>a</sub>)</div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(ySTa, 3)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">S(T<sub>a</sub>)M<sub>v</sub></div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(ySTaMv, 3)"></div>
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="row-fluid">
+                                    <div class="span6 labelleft">J for T<sub>a</sub></div>
+                                    <div class="span6 labelright" data-bind="text: roundValue(yJForTa, 2)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">                         
+                            <div class="span6">
+                                <p>According to the Location, Importance category, Site Class, Height of the building and NBC 2012 Articles 4.1.8.9 and 4.1.8.10, the selected SFRA is:</p>
+                                <div class="span11 labelboth permitted" data-bind="visible: yPermittedByNBC">
+                                    <span>Permitted by NBC</span>
+                                </div>
+                                <div class="span11 labelboth notpermitted" data-bind="visible: !yPermittedByNBC()">
+                                    <span>Not Permitted by NBC</span>
+                                </div>
+                                <div class="span12" data-bind="visible: showSAMessage">
+                                    <p>
+                                        When S(0.2) is less than or equal to 
+0.12, earthquake loads and effects need not be considered.
+                                    </p>
+                                </div>
+                           </div>
+                           <div class="span6">
+                                <img height="200" width="200" src="../../img/seismic-levels-output.png" />
+                                <br /><br />
+                           </div>
+                       </div>
+                     </div>
+                 </div>
+                
+                <div class="row-fluid" data-bind="visible: yPermittedByNBC">
+                    <table class="table table-bordered white">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Level
+                                </th>
+                                <th>
+                                    h (m)
+                                </th>
+                                <th>
+                                    W (kN)
+                                </th>
+                                <th>
+                                    F(kN)
+                                </th>
+                                <th>
+                                    V (kN)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: yFinalList().reverse()">
+                            <tr>
+                                <td data-bind="text: level"></td>
+                                <td data-bind="text: roundValue(hm)"></td>
+                                <td data-bind="text: roundValue(wkn)"></td>
+                                <td data-bind="text: roundValue(fkn)"></td>
+                                <td data-bind="text: roundValue(vkn)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row-fluid" data-bind="visible: yPermittedByNBC">
+                    <table class="table table-bordered white">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Level
+                                </th>
+                                <th>
+                                    M(kN)
+                                </th>
+                                <th>
+                                    J () <span data-bind="visible: showYOtherSFRSMessage">*</span>
+                                </th>
+                                <th>
+                                    M<sub>reduced</sub>(kN-m) <span data-bind="visible: showYOtherSFRSMessage">*</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: yFinalList()">
+                            <tr>
+                                <td data-bind="text: level"></td>
+                                <td data-bind="text: roundValue(mknm)"></td>
+                                <td data-bind="text: roundValue(j, 2)"></td>
+                                <td data-bind="text: roundValue(mknmRed)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p data-bind="visible: showYOtherSFRSMessage">
+                        * Reduction coefficient for base overturning moment is not applied.
+                    </p>
+                </div>
+
+                <div id="ygraph"></div>
+                
+                <h4>
+                    Force Multiplier For Deflections Calculation (Y Direction)
+                </h4>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Period Used - T<sub>a</sub>(deflections)
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(yPeriodUsedTaDeflection, 3)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" data-bind="visible: yPermittedByNBC">
+                    <div class="span12">
+                        <div class="row-fluid">
+                            <div class="span6 labelleft">
+                                Multiplier for deflections - V<sub>deflections</sub> / V<sub>strength</sub>
+                            </div>
+                            <div class="span6 labelright" data-bind="text: roundValue(yMultiForDeflection)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="push"></div>
+        </div>
+
+        <div id="div-fakeContent" class="hidden">
+            <h4>
+                SRFS and Period (X and Y Directions)
+            </h4>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Total Weight, W (kN)
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(totalWeight)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Base Shear, V (kN)
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(xBaseShear)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Force at the top, F<sub>t</sub> (kN)
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(xTopForce)"></div>
+                    </div>
+                </div>
+            </div>
+            <h4>
+                Force Distribution (X Direction)
+            </h4>
+             <div class="row-fluid">
+                 <div class="span12">
+                   <div class="row-fluid">
+                     <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">T<sub>a</sub></div>
+                                <div class="span6 labelright" data-bind="text: roundValue(xTa)"></div>
+                      
+                            </div>
+                     </div>
+                     <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">S(T<sub>a</sub>)</div>
+                                <div class="span6 labelright" data-bind="text: roundValue(xSTa)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">S(T<sub>a</sub>)M<sub>v</sub></div>
+                                <div class="span6 labelright" data-bind="text: roundValue(xSTaMv)"></div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">J for T<sub>a</sub></div>
+                                <div class="span6 labelright" data-bind="text: roundValue(xJForTa)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">                         
+                        <div class="span6">
+                            <p>According to the Location, Importance category, Site Class, Height of the building and NBC 2012 Articles 4.1.8.9 and 4.1.8.10, the selected SFRA is:</p>
+                       </div>
+                        <div class="span11 labelboth permitted" data-bind="visible: xPermittedByNBC">
+                            <span>Permitted by NBC</span>
+                        </div>
+                        <div class="span11 labelboth notpermitted" data-bind="visible: !xPermittedByNBC">
+                            <span>Not Permitted by NBC</span>
+                        </div>
+                   </div>
+                 </div>
+             </div>
+
+            <div class="row-fluid">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                h (m)
+                            </th>
+                            <th>
+                                W (kN)
+                            </th>
+                            <th>
+                                F(kN)
+                            </th>
+                            <th>
+                                V (kN)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: xFinalList().reverse()">
+                        <tr>
+                            <td data-bind="text: level"></td>
+                            <td data-bind="text: roundValue(hm)"></td>
+                            <td data-bind="text: roundValue(wkn)"></td>
+                            <td data-bind="text: roundValue(fkn)"></td>
+                            <td data-bind="text: roundValue(vkn)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row-fluid">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                M(kN)
+                            </th>
+                            <th>
+                                J ()
+                            </th>
+                            <th>
+                                M<sub>reduced</sub>(kN-m)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: xFinalList()">
+                        <tr>
+                            <td data-bind="text: level"></td>
+                            <td data-bind="text: roundValue(mknm)"></td>
+                            <td data-bind="text: roundValue(j)"></td>
+                            <td data-bind="text: mknmRed"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h4>
+                Force Multiplier For Deflections Calculation (X Direction)
+            </h4>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Period Used - T<sub>a</sub>(deflections)
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(xPeriodUsedTaDeflection, 3)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Multiplier for deflections - V<sub>deflections</sub> / V<sub>strength</sub>
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(xMultiForDeflection)"></div>
+                    </div>
+                </div>
+            </div>
+            <h4>
+                Force Distribution (Y Direction)
+            </h4>
+             <div class="row-fluid">
+                 <div class="span12">
+                   <div class="row-fluid">
+                     <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">T<sub>a</sub></div>
+                                <div class="span6 labelright" data-bind="text: roundValue(yTa)"></div>
+                      
+                       </div>
+                     </div>
+                     <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">S(T<sub>a</sub>)</div>
+                                <div class="span6 labelright" data-bind="text: roundValue(ySTa)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">S(T<sub>a</sub>)M<sub>v</sub></div>
+                                <div class="span6 labelright" data-bind="text: roundValue(ySTaMv)"></div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span6 labelleft">J for T<sub>a</sub></div>
+                                <div class="span6 labelright" data-bind="text: roundValue(yJForTa)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">                         
+                        <div class="span6">
+                            <p>According to the Location, Importance category, Site Class, Height of the building and NBC 2012 Articles 4.1.8.9 and 4.1.8.10, the selected SFRA is:</p>
+                       </div>
+                        <div class="span11 labelboth permitted" data-bind="visible: yPermittedByNBC">
+                            <span>Permitted by NBC</span>
+                        </div>
+                        <div class="span11 labelboth notpermitted" data-bind="visible: !yPermittedByNBC">
+                            <span>Not Permitted by NBC</span>
+                        </div>
+                   </div>
+                 </div>
+             </div>
+            
+            <div class="row-fluid">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                h (m)
+                            </th>
+                            <th>
+                                W (kN)
+                            </th>
+                            <th>
+                                F(kN)
+                            </th>
+                            <th>
+                                V (kN)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: yFinalList().reverse()">
+                        <tr>
+                            <td data-bind="text: level"></td>
+                            <td data-bind="text: roundValue(hm)"></td>
+                            <td data-bind="text: roundValue(wkn)"></td>
+                            <td data-bind="text: roundValue(fkn)"></td>
+                            <td data-bind="text: roundValue(vkn)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row-fluid">
+                <table class="table table-bordered white">
+                    <thead>
+                        <tr>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                M(kN)
+                            </th>
+                            <th>
+                                J ()
+                            </th>
+                            <th>
+                                M<sub>reduced</sub>(kN-m)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: yFinalList()">
+                        <tr>
+                            <td data-bind="text: level"></td>
+                            <td data-bind="text: roundValue(mknm)"></td>
+                            <td data-bind="text: roundValue(j)"></td>
+                            <td data-bind="text: mknmRed"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <h4>
+                Force Multiplier For Deflections Calculation (Y Direction)
+            </h4>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Period Used - T<sub>a</sub>(deflections)
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(yPeriodUsedTaDeflection, 3)"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span6 labelleft">
+                            Multiplier for deflections - V<sub>deflections</sub> / V<sub>strength</sub>
+                        </div>
+                        <div class="span6 labelright" data-bind="text: roundValue(yMultiForDeflection)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="div-footer-with-save" class="footer hidden">
+            <div class="stage">
+                <div class="row-fluid">
+                    <a id="a-save" class="button blue span3" data-bind="click: save">Save this Output</a>
+                    <a id="a-back" class="button grey span3">Back</a>
+                    <a href="../info.html" class="button grey span2">?</a>
+                    <a href="../landing.html" class="button grey span4">Home</a>
+                </div>
+            </div>
+        </div>
+        <div id="div-footer-with-email" class="footer hidden">
+            <div class="stage">
+                <div class="row-fluid">
+                    <a id="a-edit" class="button blue span3" data-bind="click: edit">Edit</a>
+                    <a id="a-email" class="button blue span3 spanner">Email</a> <a href="../info.html" class="button grey span2">?</a> <a href="../landing.html" class="button grey span4">Home</a>
+                </div>
+            </div>
+        </div>
+        <div id="div-basic-footer" class="footer">
+            <div class="stage">
+                <div class="row-fluid">
+                    <a href="../info.html" class="button grey span2 offset6">?</a> <a href="../landing.html" class="button grey span4">Home</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="div-footer-with-output" class="footer hidden">
+          <div class="stage">
+            <div class="row-fluid">
+                <a href="../saved/seismic.html" class="button blue span6 spanner">Saved Outputs</a>
+                <a href="../info.html" class="button grey span2">?</a>
+                <a href="../landing.html" class="button grey span4">Home</a> 
+            </div>
+          </div>
+        </div>
+        
+        <!--<script type="text/javascript" src="../../../cordova.js"></script>-->
+        <script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="../../js/knockout-3.1.0.js"></script>
+        <script type="text/javascript" src="../../js/knockout.mapping-latest.js"></script>
+        <script type="text/javascript" src="../../js/jqplot/jquery.jqplot.min.js"></script>
+        <script type="text/javascript" src="../../js/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+        <script type="text/javascript" src="../../js/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+        <script type="text/javascript" src="../../js/fileio.js"></script>
+        <script type="text/javascript" src="../../js/nav.js"></script>
+        <script type="text/javascript" src="../../js/outputviewmodel.js"></script>
+        <script type="text/javascript" src="../../js/seismicFormulas.js"></script>
+        <script type="text/javascript" src="../../js/storage.js"></script>
+        <script type="text/javascript" src="js/screen3ViewModel.js"></script>
+        <script type="text/javascript" src="js/screen3.js"></script>
+    </body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link rel="stylesheet" type="text/css" href="../../css/cisc.css" />
+<title>LF10 - LATERAL FORCES NBC 2010 (WIND)</title>
+</head>
+<body>
+
+	<div class="stage">
+		<div class="header">
+			<div class="row-fluid">
+				<div class="span5">
+					<img src="../../img/logo.svg" class="headerlogo" alt="logo">
+				</div>
+				<div class="span7">
+					<h2>LF10 - LATERAL FORCES NBC 2010 (WIND)</h2>
+					<h3>Static and Dynamic Procedure for Wind Loads</h3>
+				</div>
+			</div>
+		</div>
+		<div class="content">
+			<h4>Factored Loads On Building (X Direction)</h4>
+			
+			<table class="table table-bordered white">
+				<thead>
+					<tr>
+						<th>LEVEL</th>
+						<th>F (kN)</th>
+						<th>V (kN)</th>
+						<th>M (kN-m)</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: xDirectionLoads()">
+					<tr>
+						<td data-bind="text: level"></td>
+						<td data-bind="text: roundValue(fkn)"></td>
+						<td data-bind="text: roundValue(vkn)"></td>
+						
+                        <td data-bind="text: roundValue(mknm)"></td>
+                      
+					</tr>
+				</tbody>
+			</table>
+
+			<h4>Factored Loads On Building (Y Direction)</h4>
+
+
+			<table class="table table-bordered white">
+				<thead>
+					<tr>
+						<th>LEVEL</th>
+						<th>F (kN)</th>
+						<th>V (kN)</th>
+						<th>M (kN-m)</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: yDirectionLoads()" >
+					<tr>
+						<td data-bind="text: level"></td>
+						<td data-bind="text: roundValue(fkn)"></td>
+						<td data-bind="text: roundValue(vkn)"></td>
+						
+                        <td data-bind="text: roundValue(mknm)"></td>
+                       
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="row-fluid">
+				<div>
+					<strong>Base<sup>*</sup> Includes the wind load on the lower half of the 1st level.</strong>
+					<br /><br />
+					<img height="200" width="200" src="../../img/wind-levels-output.png" />
+				</div>
+			</div>
+
+			<div class="push"></div>
+		</div>
+
+		<div id="div-fakeContent" class="hidden">
+
+			<h4>Factored Loads On Building (X Direction)</h4>
+
+			<table border="1">
+				<thead>
+					<tr>
+						<th>LEVEL</th>
+						<th>F (kN)</th>
+						<th>V (kN)</th>
+						<th>M (kN-m)</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: xDirectionLoads()">
+					<tr>
+						<td data-bind="text: level"></td>
+						<td data-bind="text: roundValue(fkn)"></td>
+						<td data-bind="text: roundValue(vkn)"></td>
+						<td data-bind="text: roundValue(mknm)"></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h4>Factored Loads On Building (Y Direction)</h4>
+
+			<table border="1">
+				<thead>
+					<tr>
+						<th>LEVEL</th>
+						<th>F (kN)</th>
+						<th>V (kN)</th>
+						<th>M (kN-m)</th>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: yDirectionLoads()" >
+					<tr>
+						<td data-bind="text: level"></td>
+						<td data-bind="text: roundValue(fkn)"></td>
+						<td data-bind="text: roundValue(vkn)"></td>
+						<td data-bind="text: roundValue(mknm)"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div id="div-footer-with-save" class="footer">
+				<div class="stage">
+					<div class="row-fluid">
+						<a id="a-save" class="button blue span4" data-bind="click: save">Save this Output</a>
+						<a id="a-back" class="button grey span3">Back</a>
+						<a href="../info.html" class="button grey span2">?</a>
+						<a href="../landing.html" class="button grey span3">Home</a> 
+					</div>
+				</div>
+		</div>
+
+		<div id="div-footer-with-email" class="footer hidden" style="height: 95px;">
+			<div class="stage">
+				<div class="row-fluid">
+					<a id="a-edit" class="button blue span4 spanner" data-bind="click: edit">Edit</a>
+					<a id="a-email" class="button blue span3 spanner">Email</a>
+					<a href="../info.html" class="button grey span2">?</a>
+					<a href="../landing.html" class="button grey span3">Home</a> 
+				</div>
+			</div>
+		</div>
+
+		<div id="div-footer-with-output" class="footer hidden">
+          <div class="stage">
+            <div class="row-fluid">
+                <a href="../saved/wind.html" class="button blue span7 spanner">Saved Outputs</a>
+                <a href="../info.html" class="button grey span2">?</a>
+                <a href="../landing.html" class="button grey span3">Home</a> 
+            </div>
+          </div>
+        </div>
+
+</div>
+
+	<script type="text/javascript" src="../../../cordova.jss"></script>
+	<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../js/knockout-3.1.0.js"></script>
+	<script type="text/javascript" src="../../js/knockout.mapping-latest.js"></script>
+	<script type="text/javascript" src="../../js/nav.js"></script>
+	<script type="text/javascript" src="../../js/formulas.js"></script>
+	<script type="text/javascript" src="../../js/outputviewmodel.js"></script>
+	<script type="text/javascript" src="../../js/storage.js"></script>
+	<script type="text/javascript" src="js/screen3ViewModel.js"></script>
+	<script type="text/javascript" src="js/screen3.js"></script>
+
+</body>
+</html>
